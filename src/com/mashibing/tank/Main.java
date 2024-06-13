@@ -10,7 +10,7 @@ public class Main {
         TankFrame tf = new TankFrame();
         while(true){
             Thread.sleep(50);
-            tf.repaint();
+            tf.repaint(); // repaint首先会调用update，再调用paint
         }
     }
 }

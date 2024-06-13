@@ -13,8 +13,10 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
     Tank myTank = new Tank(200,200,Dir.DOWN);
+    Bullet b = new Bullet(300,300,Dir.DOWN);
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
     public TankFrame(){
-        setSize(800, 600);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank War");
         setVisible(true);
@@ -26,9 +28,27 @@ public class TankFrame extends Frame {
             }
         });
     }
+    Image offScreenImage = null; // 定义一张图片在缓存里
+    @Override
+    public void update(Graphics g){
+        if(offScreenImage == null){
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        // 把背景重新画一遍
+        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        // 调用paint
+        paint(gOffScreen);
+        // 用屏幕画笔将缓存中的整张图片复制过来
+        g.drawImage(offScreenImage,0,0,null);
+    }
     @Override
     public void paint(Graphics g){
         myTank.paint(g);
+        b.paint(g);
     }
     class MyKeyListener extends KeyAdapter {
         boolean bL = false;
@@ -79,10 +99,14 @@ public class TankFrame extends Frame {
             setMainTankDir();
         }
         private void setMainTankDir(){
-            if(bL) myTank.setDir(Dir.LEFT);
-            if(bU) myTank.setDir(Dir.UP);
-            if(bR) myTank.setDir(Dir.RIGHT);
-            if(bD) myTank.setDir(Dir.DOWN);
+            if(!bL && !bU && !bR && !bD) myTank.setMoving(false);
+            else {
+                myTank.setMoving(true);
+                if (bL) myTank.setDir(Dir.LEFT);
+                if (bU) myTank.setDir(Dir.UP);
+                if (bR) myTank.setDir(Dir.RIGHT);
+                if (bD) myTank.setDir(Dir.DOWN);
+            }
         }
     }
 }
