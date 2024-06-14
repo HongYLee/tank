@@ -1,10 +1,9 @@
 package com.mashibing.tank;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 功能:
@@ -12,15 +11,16 @@ import java.awt.event.WindowEvent;
  * 日期：2024-06-07 23:31
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200,200,Dir.DOWN);
-    Bullet b = new Bullet(300,300,Dir.DOWN);
-    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    public TankFrame(){
-        setSize(GAME_WIDTH, GAME_HEIGHT);
+    Tank myTank = new Tank(200,200,Dir.DOWN,this);  // 创建一个tank的类，大小为200，200的矩形方块，方向向下
+    List<Bullet> bullets = new ArrayList<>();
+    Bullet b = new Bullet(300,300,Dir.DOWN, this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;  // 定义一个矩形画布的长和宽
+    public TankFrame(){ // 构造器
+        setSize(GAME_WIDTH, GAME_HEIGHT);  // 设置一个长为GAME_HEIGHT，宽为GAME_WIDTH的方框
         setResizable(false);
-        setTitle("Tank War");
-        setVisible(true);
-        this.addKeyListener(new MyKeyListener());
+        setTitle("Tank War"); // 方框的标题为Tank War
+        setVisible(true); // 显示方框
+        this.addKeyListener(new MyKeyListener()); // 监听
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -30,7 +30,7 @@ public class TankFrame extends Frame {
     }
     Image offScreenImage = null; // 定义一张图片在缓存里
     @Override
-    public void update(Graphics g){
+    public void update(Graphics g){ // 更新
         if(offScreenImage == null){
             offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
         }
@@ -46,11 +46,17 @@ public class TankFrame extends Frame {
         g.drawImage(offScreenImage,0,0,null);
     }
     @Override
-    public void paint(Graphics g){
+    public void paint(Graphics g){ // 画坦克和画子弹
+        Color c= g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("The number of bullets: " + bullets.size(),10,60);
+        g.setColor(c);
         myTank.paint(g);
-        b.paint(g);
+        for(int i = 0; i < bullets.size(); i++){ //迭代器迭代的时候中途不能增删
+            bullets.get(i).paint(g);
+        }
     }
-    class MyKeyListener extends KeyAdapter {
+    class MyKeyListener extends KeyAdapter {  // 键盘监听
         boolean bL = false;
         boolean bU = false;
         boolean bR = false;
@@ -92,6 +98,9 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = false;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire(); //打出一颗子弹
                     break;
                 default:
                     break;

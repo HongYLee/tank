@@ -8,26 +8,28 @@ import java.awt.*;
  * 日期：2024-06-13 20:29
  */
 public class Tank {
+    // 成员变量
     private int x, y;
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
 
     private boolean moving = false;
+    private TankFrame tf = null;
 
+
+    public Tank(int x, int y, Dir dir, TankFrame tf) { // 构造器
+        super();
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.tf = tf;
+    }
     public boolean isMoving() {
         return moving;
     }
     public void setMoving(boolean moving){
         this.moving = moving;
     }
-
-    public Tank(int x, int y, Dir dir) {
-        super();
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-    }
-
     public Dir getDir() {
         return dir;
     }
@@ -36,7 +38,7 @@ public class Tank {
         this.dir = dir;
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g){  // 画坦克，颜色，设置坦克的移动方向和速度
         Color c = g.getColor();
         g.setColor(Color.YELLOW);
         g.fillRect(x,y,50,50);
@@ -44,9 +46,9 @@ public class Tank {
         move();
     }
 
-    private void move(){
+    private void move(){  // 设置移动的方向和移动的速度
         if(!moving) return;
-        switch (dir) {
+        switch (dir){
             case LEFT:
                 x -= SPEED;
                 break;
@@ -64,4 +66,7 @@ public class Tank {
     }
 
 
+    public void fire() {
+        tf.bullets.add(new Bullet(this.x, this.y, this.dir, this.tf));
+    }
 }
