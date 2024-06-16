@@ -3,6 +3,7 @@ package com.mashibing.tank;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -56,9 +57,14 @@ public class TankFrame extends Frame {
         for(int i = 0; i < bullets.size(); i++){
             // 迭代器迭代的时候中途不能增删
             // 消除子弹列表的内存泄露问题，小心处理迭代器中的删除问题
-            // 1、使用普通方式迭代  2、在迭代过程中删除（iterator.remove）
+            // 1、使用普通方式迭代
             bullets.get(i).paint(g);
         }
+            // 2、在迭代过程中删除（iterator.remove）
+//        for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
+//            Bullet b = it.next();
+//            if(!b.live) it.remove();
+//        }
     }
     class MyKeyListener extends KeyAdapter {  // 键盘监听
         boolean bL = false;
