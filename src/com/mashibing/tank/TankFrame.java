@@ -53,7 +53,10 @@ public class TankFrame extends Frame {
         g.drawString("The number of bullets: " + bullets.size(),10,60);
         g.setColor(c);
         myTank.paint(g);
-        for(int i = 0; i < bullets.size(); i++){ //迭代器迭代的时候中途不能增删
+        for(int i = 0; i < bullets.size(); i++){
+            // 迭代器迭代的时候中途不能增删
+            // 消除子弹列表的内存泄露问题，小心处理迭代器中的删除问题
+            // 1、使用普通方式迭代  2、在迭代过程中删除（iterator.remove）
             bullets.get(i).paint(g);
         }
     }
