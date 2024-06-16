@@ -61,10 +61,15 @@ public class TankFrame extends Frame {
             bullets.get(i).paint(g);
         }
             // 2、在迭代过程中删除（iterator.remove）
-//        for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
+//      for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
 //            Bullet b = it.next();
 //            if(!b.live) it.remove();
+//      }
+        // 会报错
+//        for(Bullet b : bullets){
+//            b.paint(g);
 //        }
+
     }
     class MyKeyListener extends KeyAdapter {  // 键盘监听
         boolean bL = false;
