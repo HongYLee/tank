@@ -15,7 +15,7 @@ import java.util.List;
 public class TankFrame extends Frame {
     Tank myTank = new Tank(200,200,Dir.DOWN,this);  // 创建一个tank的类，大小为200，200的矩形方块，方向向下
     List<Bullet> bullets = new ArrayList<>();
-    Bullet b = new Bullet(300,300,Dir.DOWN, this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
+    Bullet b = new Bullet(100,100,Dir.DOWN, this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;  // 定义一个矩形画布的长和宽
     public TankFrame(){ // 构造器
         setSize(GAME_WIDTH, GAME_HEIGHT);  // 设置一个长为GAME_HEIGHT，宽为GAME_WIDTH的方框

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+
 
 /**
  * 功能:
