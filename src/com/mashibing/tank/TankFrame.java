@@ -13,8 +13,10 @@ import java.util.List;
  * 日期：2024-06-07 23:31
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200,200,Dir.DOWN,this);  // 创建一个tank的类，大小为200，200的矩形方块，方向向下
+    Tank myTank = new Tank(200,400,Dir.UP,this);  // 创建一个tank的类，大小为200，200的矩形方块，方向向下
     List<Bullet> bullets = new ArrayList<>();
+    List<Tank> tanks = new ArrayList<>();
+
     Bullet b = new Bullet(100,100,Dir.DOWN, this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;  // 定义一个矩形画布的长和宽
     public TankFrame(){ // 构造器
@@ -54,10 +56,10 @@ public class TankFrame extends Frame {
         g.drawString("The number of bullets: " + bullets.size(),10,60);
         g.setColor(c);
         myTank.paint(g);
+        // 迭代器迭代的时候中途不能增删
+        // 消除子弹列表的内存泄露问题，小心处理迭代器中的删除问题
+        // 1、使用普通方式迭代
         for(int i = 0; i < bullets.size(); i++){
-            // 迭代器迭代的时候中途不能增删
-            // 消除子弹列表的内存泄露问题，小心处理迭代器中的删除问题
-            // 1、使用普通方式迭代
             bullets.get(i).paint(g);
         }
             // 2、在迭代过程中删除（iterator.remove）
@@ -69,7 +71,9 @@ public class TankFrame extends Frame {
 //        for(Bullet b : bullets){
 //            b.paint(g);
 //        }
-
+        for(int i = 0; i < tanks.size(); i++){
+            tanks.get(i).paint(g);
+        }
     }
     class MyKeyListener extends KeyAdapter {  // 键盘监听
         boolean bL = false;
