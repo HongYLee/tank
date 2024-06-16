@@ -16,7 +16,7 @@ public class TankFrame extends Frame {
     Tank myTank = new Tank(200,400,Dir.UP,Group.GOOD,this);  // 初始化自己的坦克， 创建一个tank的类，大小为200，200的矩形方块，方向向下
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
-
+    Explode e = new Explode(100,100,this);
     Bullet b = new Bullet(100,100,Dir.DOWN, Group.GOOD,this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;  // 定义一个矩形画布的长和宽
     public TankFrame(){ // 构造器
@@ -63,6 +63,7 @@ public class TankFrame extends Frame {
         for(int i = 0; i < bullets.size(); i++){
             bullets.get(i).paint(g);
         }
+        e.paint(g); // 爆炸
             // 2、在迭代过程中删除（iterator.remove）
 //      for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
 //            Bullet b = it.next();
