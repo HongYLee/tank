@@ -23,6 +23,9 @@ public class ImageTest {
         try {
             BufferedImage image = ImageIO.read(new File("C:/Users/hp/Pictures/img13.png"));
             assertNotNull(image);
+
+            BufferedImage image2 = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("image/img2.png"));
+            assertNotNull(image2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
