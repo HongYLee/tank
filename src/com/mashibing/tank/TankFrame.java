@@ -13,11 +13,11 @@ import java.util.List;
  * 日期：2024-06-07 23:31
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200,400,Dir.UP,this);  // 创建一个tank的类，大小为200，200的矩形方块，方向向下
+    Tank myTank = new Tank(200,400,Dir.UP,Group.GOOD,this);  // 初始化自己的坦克， 创建一个tank的类，大小为200，200的矩形方块，方向向下
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
 
-    Bullet b = new Bullet(100,100,Dir.DOWN, this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
+    Bullet b = new Bullet(100,100,Dir.DOWN, Group.GOOD,this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;  // 定义一个矩形画布的长和宽
     public TankFrame(){ // 构造器
         setSize(GAME_WIDTH, GAME_HEIGHT);  // 设置一个长为GAME_HEIGHT，宽为GAME_WIDTH的方框
@@ -54,6 +54,7 @@ public class TankFrame extends Frame {
         Color c= g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("The number of bullets: " + bullets.size(),10,60);
+        g.drawString("The number of enemies: " + tanks.size(),10,80);
         g.setColor(c);
         myTank.paint(g);
         // 迭代器迭代的时候中途不能增删
@@ -73,6 +74,12 @@ public class TankFrame extends Frame {
 //        }
         for(int i = 0; i < tanks.size(); i++){
             tanks.get(i).paint(g);
+        }
+        // 敌军和坦克的碰撞检测
+        for(int i = 0; i < bullets.size(); i++){
+            for(int j = 0; j < tanks.size(); j++){
+                bullets.get(i).collideWith(tanks.get(j));
+            }
         }
     }
     class MyKeyListener extends KeyAdapter {  // 键盘监听

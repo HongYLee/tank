@@ -14,15 +14,26 @@ public class Bullet {
     private int x, y;
     private Dir dir;
     TankFrame tf = null;
-    private boolean live = true;
-    public Bullet(int x, int y, Dir dir, TankFrame tf){
+    private Group group = Group.BAD;
+    private boolean living = true;
+    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf){
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     public void paint(Graphics g){
-        if(!live){
+        if(!living){
             tf.bullets.remove(this);
         }
         switch (dir) {
@@ -57,7 +68,21 @@ public class Bullet {
                 y += SPEED;
                 break;
         }
-        if(x < 0 || y < 0 || x > TankFrame.GAME_HEIGHT || y > TankFrame.GAME_HEIGHT) live = false;
+        if(x < 0 || y < 0 || x > TankFrame.GAME_HEIGHT || y > TankFrame.GAME_HEIGHT) living = false;
 
+    }
+
+    public void collideWith(Tank tank) {
+        if(this.group == tank.getGroup()) return;
+        //TODO: 用一个rect来记录子弹的位置
+        Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
+        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
+        if(rect1.intersects(rect2)){ // 如果子弹和敌军相交，则子弹和敌军都死了
+            tank.die();
+            this.die();
+        }
+    }
+    private void die(){
+        this.living = false;
     }
 }
