@@ -16,7 +16,7 @@ public class TankFrame extends Frame {
     Tank myTank = new Tank(200,400,Dir.UP,Group.GOOD,this);  // 初始化自己的坦克， 创建一个tank的类，大小为200，200的矩形方块，方向向下
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
-    Explode e = new Explode(100,100,this);
+    List<Explode> explodes = new ArrayList<>();
     Bullet b = new Bullet(100,100,Dir.DOWN, Group.GOOD,this); // 创建一个子弹的类，大小为300，300的圆形，方向向下
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;  // 定义一个矩形画布的长和宽
     public TankFrame(){ // 构造器
@@ -55,6 +55,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("The number of bullets: " + bullets.size(),10,60);
         g.drawString("The number of enemies: " + tanks.size(),10,80);
+        g.drawString("The number of explodes: " + explodes.size(),10,100);
         g.setColor(c);
         myTank.paint(g);
         // 迭代器迭代的时候中途不能增删
@@ -63,8 +64,8 @@ public class TankFrame extends Frame {
         for(int i = 0; i < bullets.size(); i++){
             bullets.get(i).paint(g);
         }
-        e.paint(g); // 爆炸
-            // 2、在迭代过程中删除（iterator.remove）
+
+        // 2、在迭代过程中删除（iterator.remove）
 //      for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();){
 //            Bullet b = it.next();
 //            if(!b.live) it.remove();
@@ -76,6 +77,10 @@ public class TankFrame extends Frame {
         for(int i = 0; i < tanks.size(); i++){
             tanks.get(i).paint(g);
         }
+        for(int i = 0; i < explodes.size(); i++){
+            explodes.get(i).paint(g);
+        }
+
         // 敌军和坦克的碰撞检测
         for(int i = 0; i < bullets.size(); i++){
             for(int j = 0; j < tanks.size(); j++){

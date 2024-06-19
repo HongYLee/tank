@@ -80,6 +80,7 @@ public class Bullet {
         if(rect1.intersects(rect2)){ // 如果子弹和敌军相交，则子弹和敌军都死了
             tank.die();
             this.die();
+            tf.explodes.add(new Explode(x,y,tf));
         }
     }
     private void die(){
