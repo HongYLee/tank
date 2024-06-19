@@ -17,5 +17,6 @@ public class Main {
             Thread.sleep(50);
             tf.repaint(); // repaint首先会调用update，再调用paint
         }
+
     }
 }
