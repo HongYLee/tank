@@ -15,6 +15,7 @@ public class Tank {
     private static final int SPEED = 2;
     public static int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
+    Rectangle rect = new Rectangle();
     private Random random = new Random();
     private Group group = Group.BAD; // 我方坦克 or 敌军坦克
     private boolean moving = true;
@@ -28,6 +29,11 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public int getX() {
@@ -116,6 +122,9 @@ public class Tank {
             randomDir();}
         // 做一个边界检测
         boundsCheck();
+        // update rect
+        rect.x = this.x;
+        rect.y = this.y;
     }
 
     private void boundsCheck() {
