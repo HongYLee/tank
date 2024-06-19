@@ -77,7 +77,7 @@ public class TankFrame extends Frame {
         for(int i = 0; i < tanks.size(); i++){
             tanks.get(i).paint(g);
         }
-        for(int i = 0; i < explodes.size(); i++){
+        for(int i = 0; i < tanks.size(); i++){
             explodes.get(i).paint(g);
         }
 
