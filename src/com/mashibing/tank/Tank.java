@@ -110,9 +110,9 @@ public class Tank {
 
         }
         // 如果是敌军，随机发射一些炮弹
-        if(this.group ==  Group.BAD && random.nextInt(100) > 95)
+        if(this.group ==  Group.BAD && random.nextInt(100) > 95){
             this.fire();
-            randomDir();
+            randomDir();}
     }
 
 
