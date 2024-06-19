@@ -67,6 +67,10 @@ public class Tank {
     public void setGroup(Group group) {
         this.group = group;
     }
+    private void randomDir(){ // 设置敌军坦克可以随意调整方向（判断我方坦克不要随意调整方向）
+        if(this.group == Group.GOOD) return;
+        this.dir = Dir.values()[random.nextInt(4)];
+    }
 
     public void paint(Graphics g){  // 画坦克，颜色，设置坦克的移动方向和速度
         if(!living) tf.tanks.remove(this);
@@ -105,7 +109,10 @@ public class Tank {
                 break;
 
         }
-        if(random.nextInt(10) > 8) this.fire();
+        // 如果是敌军，随机发射一些炮弹
+        if(this.group ==  Group.BAD && random.nextInt(100) > 95)
+            this.fire();
+            randomDir();
     }
 
 
