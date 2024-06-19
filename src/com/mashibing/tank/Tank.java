@@ -12,7 +12,7 @@ public class Tank {
     // 成员变量
     private int x, y;
     private Dir dir = Dir.DOWN;
-    private static final int SPEED = 1;
+    private static final int SPEED = 2;
     public static int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
     private Random random = new Random();
@@ -114,6 +114,15 @@ public class Tank {
         if(this.group ==  Group.BAD && random.nextInt(100) > 95){
             this.fire();
             randomDir();}
+        // 做一个边界检测
+        boundsCheck();
+    }
+
+    private void boundsCheck() {
+        if(this.x < 2) x = 2;
+        if(this.y < 28)   y = 28;
+        if(this.x > TankFrame.GAME_WIDTH - Tank.WIDTH)  x = TankFrame.GAME_WIDTH - Tank.WIDTH;
+        if(this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT)  y = TankFrame.GAME_HEIGHT - Tank.HEIGHT;
     }
 
 
